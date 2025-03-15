@@ -16,10 +16,16 @@ load_dotenv(project_root / '.env')
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,  # Change to DEBUG for more detailed logs
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+# Enable detailed logging for websockets and channel
+websocket_logger = logging.getLogger('websockets')
+websocket_logger.setLevel(logging.DEBUG)
+channel_logger = logging.getLogger('client.sdk.channel')
+channel_logger.setLevel(logging.DEBUG)
 
 # Default ports
 WEATHER_AGENT_PORT = 8000

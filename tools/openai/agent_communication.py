@@ -41,7 +41,17 @@ from client.sdk.channel import Channel, MessageType
 
 # Enhanced logging setup
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=os.getenv('LOG_LEVEL', 'INFO'))
+# Set up more detailed logging for WebSocket connections
+logging.basicConfig(
+    level=os.getenv('LOG_LEVEL', 'DEBUG'),  # Change default to DEBUG
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+# Enable detailed logging for websockets library
+websocket_logger = logging.getLogger('websockets')
+websocket_logger.setLevel(logging.DEBUG)
+# Enable detailed logging for client.sdk.channel
+channel_logger = logging.getLogger('client.sdk.channel')
+channel_logger.setLevel(logging.DEBUG)
 
 class AgentCommunicationError(Exception):
     """Base exception for agent communication errors."""
