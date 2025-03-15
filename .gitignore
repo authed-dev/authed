@@ -1,4 +1,14 @@
+# Environment files
 .env
+.env.*
+**/.env
+**/.env.*
+.env.local
+.env.development
+.env.test
+.env.production
+.env.backup
+.env.save
 __pycache__/
 *.egg-info/
 dist/
