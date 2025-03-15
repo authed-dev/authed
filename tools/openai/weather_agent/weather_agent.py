@@ -1,10 +1,16 @@
+import asyncio
+import os
+import sys
+from pathlib import Path
+
+# Add the project root to the Python path
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+
+from dotenv import load_dotenv
 from agents import Agent, Runner, RunConfig
 from agents import function_tool
 from pydantic import BaseModel
-import asyncio
-import os
-from pathlib import Path
-from dotenv import load_dotenv
 from tools.openai.agent_communication import AgentCommunicationTool, communicate_with_agent
 
 # Load environment variables from local .env file

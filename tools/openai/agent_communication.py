@@ -33,12 +33,11 @@ import os
 import json
 import asyncio
 import logging
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any
 from pydantic import BaseModel, Field
 from agents import function_tool
 
-from client.sdk.channel import ChannelAgent, MessageType
-from client.sdk.exceptions import ChannelError
+from client.sdk.channel import Channel, MessageType
 
 # Enhanced logging setup
 logger = logging.getLogger(__name__)
@@ -140,7 +139,7 @@ class AgentCommunicationTool:
             )
         
         # Initialize the channel agent
-        self._agent = ChannelAgent(
+        self._agent = Channel(
             agent_id=self.agent_id,
             agent_secret=self.agent_secret,
             registry_url=self.registry_url,

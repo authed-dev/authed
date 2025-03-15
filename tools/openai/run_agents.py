@@ -7,8 +7,12 @@ import sys
 from pathlib import Path
 from dotenv import load_dotenv
 
+# Add the project root to the Python path
+project_root = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(project_root))
+
 # Load main .env file for OpenAI API key
-load_dotenv(Path(__file__).parent.parent.parent / '.env')
+load_dotenv(project_root / '.env')
 
 # Configure logging
 logging.basicConfig(
@@ -37,12 +41,16 @@ async def wait_for_agent(url: str, max_retries: int = 10, retry_delay: float = 1
 
 async def run_agents():
     try:
+        # Set up Python path for subprocesses
+        python_path = str(project_root)
+        
         # Start Weather Agent
         logger.info("Starting Weather Agent...")
         weather_env = os.environ.copy()
         weather_env.update({
             "PORT": str(WEATHER_AGENT_PORT),
-            "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY")
+            "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY"),
+            "PYTHONPATH": python_path
         })
         
         weather_process = subprocess.Popen(
@@ -56,7 +64,8 @@ async def run_agents():
         travel_env = os.environ.copy()
         travel_env.update({
             "PORT": str(TRAVEL_AGENT_PORT),
-            "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY")
+            "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY"),
+            "PYTHONPATH": python_path
         })
         
         travel_process = subprocess.Popen(
